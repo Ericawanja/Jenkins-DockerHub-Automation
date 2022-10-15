@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto+Slab:wght@300;400&display=swap");
+
+/*Roboto Condensed 300 400 700
+Roboto Slab 300 300
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+}
+.wrapper {
+  width: 80%;
+  background: rgb(239, 202, 254);
+  display: grid;
+  grid-template-columns: 30% 70%;
+  margin: auto;
+  font-family: "Roboto Condensed", sans-serif;
+}
+.nav {
+  background: rgb(208, 164, 226);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+.task_list {
+}
