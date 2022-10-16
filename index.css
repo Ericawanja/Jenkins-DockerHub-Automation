@@ -29,7 +29,80 @@ body {
     align-items: center;
     
 }
-
-.task_list {
-    background-color: rgb(247, 243, 246);  
+.task_list{
+  margin: 10px;
 }
+.task{
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  padding: 15px;
+  margin-bottom: 15px;
+  align-items: center;
+  background: rgba(208, 164, 226, 0.4);
+  border-radius: 15px;
+}
+
+.completed_btn{
+  display: flex;
+  justify-content: center;
+}
+.checkbox{
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin: 0 auto;
+accent-color:rgb(208, 164, 226);;
+  
+}
+.task_details{
+padding: 0 10px;
+}
+
+.title{
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  color: rgb(55, 53, 53);
+  
+}
+.desc{
+  line-height: 2;
+  font-size: 1.2rem;
+  color: rgb(80, 80, 80);
+
+}
+.date{
+  color: rgb(80, 80, 80);
+  font-size: 0.8rem;
+}
+.side{
+  
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.side span svg{
+  width: 30px;
+  height: 30px;
+
+  cursor: pointer;
+  
+}
+.side span svg:hover{
+  opacity: 1;
+  
+}
+/*.task_list {
+    background-color: rgb(247, 243, 246); 
+    padding: 10px; 
+}
+.title_time{
+    display: flex;
+    justify-content: space-between;
+}
+ 
+.time{
+    font-style: italic;
+    font-weight: 400;
+}*/
