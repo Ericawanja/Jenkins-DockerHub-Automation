@@ -6,3 +6,5 @@ const completion_date = document.getElementById("completion_date");
 create_btn.addEventListener("click", () => {
   task_form.style.display = "block";
 });
+
+

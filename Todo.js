@@ -7,16 +7,26 @@ const renderTodos = (todo_list) => {
 
   Task_container.innerHTML = todo_list
     .map((todo, index) => {
-      const index_string = index.toString();
-      console.log(typeof index_string);
-      return `<div class="task" id =${index_string}>
-    <div class="completed_btn">
+      let nowDate = new Date().getTime();
+      let todoCompletionDate = new Date(todo.completion_date).getTime();
+
+      let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
+
+
+      let diff_ = diff > 24 ? Math.floor(diff / 24)+" Days": Math.floor(diff)+" Hours";
+
+
+      return `<div class="task ${
+        todo.status === "completed" && "task-completed"
+      }" >
+    <div class="completed_btn"  >
       <input
+      data-id="${todo.id}"
         type="checkbox"
-        id="task"
+        id="task_checkbox"
         name="completed"
-        value="task 1"
-        class='checkbox'
+        ${todo.status === "completed" && "checked"}
+        class='checkbox task_checkbox'
       />
     </div>
     <div class="task_details">
@@ -26,7 +36,7 @@ const renderTodos = (todo_list) => {
       
       <div class="date">
         <span>${new Date(todo.completion_date).toDateString()}</span>
-        <span>2 Days remaining</span>
+        <span>${diff_} remaining</span>
       </div>
     </div>
 
@@ -62,6 +72,7 @@ const renderTodos = (todo_list) => {
     })
     .join("");
 
+  //edit button
   const editButtons = document.querySelectorAll(".edit");
 
   for (let editButton of editButtons) {
@@ -78,27 +89,50 @@ const renderTodos = (todo_list) => {
         document.querySelector(".task_form").style.display = "block";
         document.querySelector("#form-title").innerHTML = "Update Task";
 
-        document.querySelector(".submit").setAttribute('data-id', id);
-
+        document.querySelector(".submit").setAttribute("data-id", id);
       }
     };
   }
 
-
+  // delete task
   const deleteButtons = document.querySelectorAll(".delete");
 
   for (let deleteButton of deleteButtons) {
     deleteButton.onclick = (e) => {
       const id = e.target.parentElement.getAttribute("data-id");
 
-      todo_data = todo_data.filter(t=>t.id !== +id)
-  
-      renderTodos(todo_data)
+      todo_data = todo_data.filter((t) => t.id !== +id);
+
+      renderTodos(todo_data);
+    };
+  }
+
+  // pupulate completed task
+
+  const task_checkboxes = document.querySelectorAll(".task_checkbox");
+  for (let checkbox of task_checkboxes) {
+    checkbox.onclick = (e) => {
+      const completed_id = e.target.getAttribute("data-id");
+      const completed_task = todo_data.find(
+        (todo) => todo.id === +completed_id
+      );
+
+      if (completed_task) {
+        todo_data = todo_data.map((t) => {
+          if (t.id === completed_task.id) {
+            t.status = t.status === "completed" ? "pending" : "completed";
+          }
+          return t;
+        });
+
+        renderTodos(todo_data);
+      }
     };
   }
 };
 
 renderTodos(todo_data);
+//create task
 
 const CreateTask = () => {
   const title = document.getElementById("title").value;
@@ -118,6 +152,8 @@ const CreateTask = () => {
   resetForm();
   renderTodos(todo_data);
 };
+
+//update task
 const UpdateTask = (id) => {
   const title = document.getElementById("title").value;
   const task_desc = document.getElementById("task_desc").value;
@@ -125,33 +161,32 @@ const UpdateTask = (id) => {
 
   const todo = todo_data.find((todo) => todo.id === id);
 
-  if(todo){
+  if (todo) {
     todo.title = title;
     todo.description = task_desc;
     todo.completion_date = completion_date;
 
-    todo_data = todo_data.map(t=>{
-      if(t.id === todo.id) return todo;
+    todo_data = todo_data.map((t) => {
+      if (t.id === todo.id) return todo;
       return t;
-    })
+    });
 
-    renderTodos(todo_data)
-  
+    renderTodos(todo_data);
+
     document.querySelector(".task_form").style.display = "none";
     resetForm();
   }
-
 };
 
 /**********************Event Listeners */
-submit.addEventListener("click", e=>{
-  let id = e.target.getAttribute('data-id');
+submit.addEventListener("click", (e) => {
+  let id = e.target.getAttribute("data-id");
   console.log(id);
 
-  if(id){
-    UpdateTask(+id)
-  }else{
-    CreateTask()
+  if (id) {
+    UpdateTask(+id);
+  } else {
+    CreateTask();
   }
 });
 document.querySelector(".cancel").addEventListener("click", () => {
@@ -165,8 +200,52 @@ function resetForm() {
   document.getElementById("task_desc").value = "";
   document.getElementById("completion_date").value = "";
 
-  document.querySelector(".submit").setAttribute('data-id', '')
+  document.querySelector(".submit").setAttribute("data-id", "");
 
   // Reset Form Title
   document.querySelector("#form-title").innerHTML = "Create Task";
 }
+
+// populating completed tasks
+
+const completed_tasks = () => {
+  console.log(todo_data);
+};
+
+// Filters
+document.querySelector(".completed").onclick = () => {
+  let temp = todo_data.filter((t) => t.status === "completed");
+  renderTodos(temp);
+};
+
+document.querySelector(".pending").onclick = () => {
+  let temp = todo_data.filter((t) => t.status === "pending");
+  renderTodos(temp);
+};
+document.querySelector(".All_Tasks").onclick = () => {
+  renderTodos(todo_data);
+};
+
+document.querySelector(".late").onclick = () => {
+  let temp = todo_data.filter((t) => {
+    let nowDate = new Date().getTime();
+    let todoCompletionDate = new Date(t.completion_date).getTime();
+
+    return todoCompletionDate - nowDate < 1;
+  });
+  renderTodos(temp);
+};
+
+document.querySelector(".today").onclick = () => {
+  let temp = todo_data.filter((t) => {
+    let nowDate = new Date().getTime();
+    let todoCompletionDate = new Date(t.completion_date).getTime();
+
+    let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
+    return diff > 0 && diff < 24;
+  });
+  renderTodos(temp);
+};
+
+const completed_btn = document.getElementsByClassName("completed")[0];
+completed_btn.addEventListener("click", completed_tasks);

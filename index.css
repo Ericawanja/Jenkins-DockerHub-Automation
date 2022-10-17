@@ -24,12 +24,26 @@ Roboto Slab 300 300
   padding: 10px;
 }
 .create_task{
-  display: flex;
   background: #ab49d2;
   padding: 10px;
-  width: 60%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.menu{
+  display: block;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  background: rgba(171, 73, 210, .2);
+  border-radius: 10px;
+}
+.menu:hover{
+  
+  background: #ab49d2;
 }
 
 .create_task button{
@@ -83,8 +97,20 @@ input{
   padding: 15px;
   margin-bottom: 15px;
   align-items: center;
-  background: rgba(208, 164, 226, 0.4);
+  background: rgba(208, 164, 226, 0.8);
   border-radius: 15px;
+}
+
+.task-completed{
+  background: rgba(208, 164, 226, 0.2);
+
+}
+
+.task-completed .title,
+.task-completed .desc,
+.task-completed .date
+{
+  text-decoration: line-through;
 }
 
 .completed_btn{ 
