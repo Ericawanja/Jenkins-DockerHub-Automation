@@ -1,9 +1,15 @@
-const Todos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let todo_data = [];
+const submit = document.querySelector(".submit");
 
-const Task_container = document.querySelector(".task_list");
-console.log(Task_container);
-Task_container.innerHTML = Todos.map((todo) => {
-  return `<div class="task">
+const renderTodos = (todo_list) => {
+  //console.log(todo_list)
+  const Task_container = document.querySelector(".task_list");
+
+  Task_container.innerHTML = todo_list
+    .map((todo, index) => {
+      const index_string = index.toString();
+      console.log(typeof index_string);
+      return `<div class="task" id =${index_string}>
     <div class="completed_btn">
       <input
         type="checkbox"
@@ -14,18 +20,18 @@ Task_container.innerHTML = Todos.map((todo) => {
       />
     </div>
     <div class="task_details">
-      <div class="title">Cook</div>
+      <div class="title">${todo.title}</div>
     
-        <span class="desc">Go and cook the supper</span>
+        <span class="desc">${todo.description}</span>
       
       <div class="date">
-        <span>22 Aug 2022</span>
+        <span>${new Date(todo.completion_date).toDateString()}</span>
         <span>2 Days remaining</span>
       </div>
     </div>
 
     <div class="side">      
-        <span class="edit">
+        <span data-id="${todo.id}" class="edit">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -38,7 +44,7 @@ Task_container.innerHTML = Todos.map((todo) => {
             ></path>
           </svg>
         </span>
-        <span class="delete">
+        <span data-id="${todo.id}" class="delete">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -53,4 +59,114 @@ Task_container.innerHTML = Todos.map((todo) => {
         </span>      
     </div>
   </div>`;
-}).join("");
+    })
+    .join("");
+
+  const editButtons = document.querySelectorAll(".edit");
+
+  for (let editButton of editButtons) {
+    editButton.onclick = (e) => {
+      const id = e.target.parentElement.getAttribute("data-id");
+
+      const todo = todo_data.find((todo) => todo.id === +id);
+
+      if (todo) {
+        document.getElementById("title").value = todo.title;
+        document.getElementById("task_desc").value = todo.description;
+        document.getElementById("completion_date").value = todo.completion_date;
+
+        document.querySelector(".task_form").style.display = "block";
+        document.querySelector("#form-title").innerHTML = "Update Task";
+
+        document.querySelector(".submit").setAttribute('data-id', id);
+
+      }
+    };
+  }
+
+
+  const deleteButtons = document.querySelectorAll(".delete");
+
+  for (let deleteButton of deleteButtons) {
+    deleteButton.onclick = (e) => {
+      const id = e.target.parentElement.getAttribute("data-id");
+
+      todo_data = todo_data.filter(t=>t.id !== +id)
+  
+      renderTodos(todo_data)
+    };
+  }
+};
+
+renderTodos(todo_data);
+
+const CreateTask = () => {
+  const title = document.getElementById("title").value;
+  const task_desc = document.getElementById("task_desc").value;
+  const completion_date = document.getElementById("completion_date").value;
+  const id = Math.ceil(Math.random() * 100000000);
+  const todo = {
+    id,
+    title,
+    description: task_desc,
+    completion_date,
+    status: "pending",
+  };
+
+  todo_data.unshift(todo);
+  document.querySelector(".task_form").style.display = "none";
+  resetForm();
+  renderTodos(todo_data);
+};
+const UpdateTask = (id) => {
+  const title = document.getElementById("title").value;
+  const task_desc = document.getElementById("task_desc").value;
+  const completion_date = document.getElementById("completion_date").value;
+
+  const todo = todo_data.find((todo) => todo.id === id);
+
+  if(todo){
+    todo.title = title;
+    todo.description = task_desc;
+    todo.completion_date = completion_date;
+
+    todo_data = todo_data.map(t=>{
+      if(t.id === todo.id) return todo;
+      return t;
+    })
+
+    renderTodos(todo_data)
+  
+    document.querySelector(".task_form").style.display = "none";
+    resetForm();
+  }
+
+};
+
+/**********************Event Listeners */
+submit.addEventListener("click", e=>{
+  let id = e.target.getAttribute('data-id');
+  console.log(id);
+
+  if(id){
+    UpdateTask(+id)
+  }else{
+    CreateTask()
+  }
+});
+document.querySelector(".cancel").addEventListener("click", () => {
+  document.querySelector(".task_form").style.display = "none";
+  resetForm();
+});
+
+function resetForm() {
+  // Clear inputs
+  document.getElementById("title").value = "";
+  document.getElementById("task_desc").value = "";
+  document.getElementById("completion_date").value = "";
+
+  document.querySelector(".submit").setAttribute('data-id', '')
+
+  // Reset Form Title
+  document.querySelector("#form-title").innerHTML = "Create Task";
+}

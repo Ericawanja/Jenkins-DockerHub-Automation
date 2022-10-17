@@ -22,26 +22,29 @@
           </svg>
           <button>Create Task</button>
         </div>
-        <span>Completed</span>
-        <span>Upcoming</span>
-        <span>Yesterday</span>
-        <span>Today tasks </span>
+        <span class="completed">Completed</span>
+        <span class="All_Tasks">All Tasks</span>
+        <span class="late">Late Tasks</span>
+        <span class="today">Today tasks </span>
       </div>
       <div class="task_form">
-        <h1>The modal</h1>
+        <h1 id="form-title">Create Task</h1>
         <form>
-          <label for="title">Enter the task title</label><br />
-          <input type="text" name="title" id="title" /><br /><br />
+          <label for="title">Task title</label><br />
+          <input type="text" placeholder="Enter the task title" name="title" id="title" /><br /><br />
 
-          <label for="task_desc">Enter task details</label><br />
-          <input type="text" name="task_desc" id="task_desc" /><br /><br />
+          <label for="task_desc">Task details</label><br />
+          <input type="text" placeholder="Enter task details" name="task_desc" id="task_desc" /><br /><br />
           <label for="completion_date"></label>
           <input
             type="datetime-local"
             name="completion_date"
             id="completion_date"
           /><br /><br />
-          <button type="submit" class="submit">Save</button>
+          <div class="form_btns">
+            <button type="button" class="cancel">Cancel</button>
+            <button type="button" class="submit">Save</button>
+          </div>
         </form>
       </div>
       <div class="task_list_wrapper">
