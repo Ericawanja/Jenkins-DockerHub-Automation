@@ -4,6 +4,12 @@ const submit = document.querySelector(".submit");
 const renderTodos = (todo_list) => {
   //console.log(todo_list)
   const Task_container = document.querySelector(".task_list");
+  if(todo_list.length === 0){
+    Task_container.innerHTML= `<div class="">
+    <h4>No tasks yet. Click create button to add</h4>  
+    `
+  } else{
+ 
 
   Task_container.innerHTML = todo_list
     .map((todo, index) => {
@@ -129,6 +135,7 @@ const renderTodos = (todo_list) => {
       }
     };
   }
+}
 };
 
 renderTodos(todo_data);
@@ -208,9 +215,7 @@ function resetForm() {
 
 // populating completed tasks
 
-const completed_tasks = () => {
-  console.log(todo_data);
-};
+
 
 // Filters
 document.querySelector(".completed").onclick = () => {
@@ -247,5 +252,16 @@ document.querySelector(".today").onclick = () => {
   renderTodos(temp);
 };
 
-const completed_btn = document.getElementsByClassName("completed")[0];
-completed_btn.addEventListener("click", completed_tasks);
+/*const completed_btn = document.getElementsByClassName("completed")[0];
+completed_btn.addEventListener("click", completed_tasks);*/
+
+//opening form
+const create_btn = document.querySelector(".create_Task");
+const task_form = document.querySelector(".task_form");
+
+create_btn.addEventListener("click", () => {
+  task_form.style.display = "block";
+});
+
+
+

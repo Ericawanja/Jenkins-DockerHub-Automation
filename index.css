@@ -10,6 +10,7 @@ Roboto Slab 300 300
 
 .wrapper {
   width: 80%;
+  min-height: 100vh;
   background: rgb(239, 202, 254);
   display: grid;
   grid-template-columns: 30% 70%;
@@ -83,11 +84,16 @@ input{
   
 }
 
-.hero{
+.menu_icon{
+  display: none;
+}
+.hero .hero_details{
     display: flex;
     align-items: center;
     
+    
 }
+
 .task_list{
   margin: 10px;
 }
@@ -164,16 +170,60 @@ padding: 0 10px;
   opacity: 1;
   
 }
-/*.task_list {
-    background-color: rgb(247, 243, 246); 
-    padding: 10px; 
+.open{
+  display: block;
+  position: fixed;
+  right: 50%;
+  left: 10%;
+  width: 60%;
+  background-color: aqua;
 }
-.title_time{
-    display: flex;
-    justify-content: space-between;
+
+@media  screen and (max-width:750px) {
+  body{
+    background-color: yellowgreen;
+  }
+  .wrapper{
+    width: 90%;
+  
+  }
+  .hero .hero_details{
+    padding-left: 10px;
+  } 
+  .hero .hero_details img{
+    width: 150px;
+      }
+      .hero_details h2{
+        padding-left: 10px;
+      }
+  
 }
+@media  screen and (max-width:450px) {
+  body{
+    background-color: tomato;
+  }
+  .wrapper{
+    grid-template-columns: 100%;
+  }
+  .nav{
+    display: none;
+  }
  
-.time{
-    font-style: italic;
-    font-weight: 400;
-}*/
+  /*.create_task{
+    display: block;
+    position: fixed;
+    right: 50%;
+    left: 50%;
+    transform: translate(-50% -50%);
+  }*/
+
+  .menu_icon{ 
+    display: flex;
+    display: block;
+    justify-content: flex-start;
+    padding-left: 0px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+}

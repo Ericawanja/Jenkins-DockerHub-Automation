@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="nav">
+      <div class="nav" id="navid">
         <div class="create_task">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,10 +32,21 @@
         <h1 id="form-title">Create Task</h1>
         <form>
           <label for="title">Task title</label><br />
-          <input type="text" placeholder="Enter the task title" name="title" id="title" /><br /><br />
+          <input
+            type="text"
+            placeholder="Enter the task title"
+            name="title"
+            id="title"
+            required
+          /><br /><br />
 
           <label for="task_desc">Task details</label><br />
-          <input type="text" placeholder="Enter task details" name="task_desc" id="task_desc" /><br /><br />
+          <input
+            type="text"
+            placeholder="Enter task details"
+            name="task_desc"
+            id="task_desc"
+          /><br /><br />
           <label for="completion_date"></label>
           <input
             type="datetime-local"
@@ -50,8 +61,14 @@
       </div>
       <div class="task_list_wrapper">
         <div class="hero">
-          <img src="./image/img4.jpg" alt="" />
-          <h2>Get it done. Get it done now</h2>
+          <div class="menu_icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M4 6h16v2H4zm4 5h12v2H8zm5 5h7v2h-7z"></path></svg>
+          </div>
+
+          <div class="hero_details">
+            <img src="./image/img4.jpg" alt="" />
+            <h2>Get it done. Get it done now</h2>
+          </div>
         </div>
 
         <div class="task_list"></div>
