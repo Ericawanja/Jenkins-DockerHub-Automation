@@ -25,5 +25,5 @@ if(!nav.classList.contains('open')){
 
 ///changing menu icon
 
-menu_
+
  

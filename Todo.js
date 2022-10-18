@@ -17,6 +17,8 @@ const renderTodos = (todo_list) => {
       let todoCompletionDate = new Date(todo.completion_date).getTime();
 
       let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
+      
+      let diff_status = diff < 0 ? 'Late' : 'Remaining' 
 
 
       let diff_ = diff > 24 ? Math.floor(diff / 24)+" Days": Math.floor(diff)+" Hours";
@@ -42,7 +44,7 @@ const renderTodos = (todo_list) => {
       
       <div class="date">
         <span>${new Date(todo.completion_date).toDateString()}</span>
-        <span>${diff_} remaining</span>
+        <span>${diff_} ${diff_status}</span>
       </div>
     </div>
 
@@ -130,8 +132,10 @@ const renderTodos = (todo_list) => {
           }
           return t;
         });
-
+        //const  = todo_data.filter((t) => completed_id.id == +id);
+        hideNav()
         renderTodos(todo_data);
+        
       }
     };
   }
@@ -145,6 +149,7 @@ const CreateTask = () => {
   const title = document.getElementById("title").value;
   const task_desc = document.getElementById("task_desc").value;
   const completion_date = document.getElementById("completion_date").value;
+  if(title && task_desc && completion_date){
   const id = Math.ceil(Math.random() * 100000000);
   const todo = {
     id,
@@ -157,7 +162,13 @@ const CreateTask = () => {
   todo_data.unshift(todo);
   document.querySelector(".task_form").style.display = "none";
   resetForm();
+  hideNav()
   renderTodos(todo_data);
+  
+}
+else{
+  alert('Enter all details')
+}
 };
 
 //update task
@@ -220,14 +231,17 @@ function resetForm() {
 // Filters
 document.querySelector(".completed").onclick = () => {
   let temp = todo_data.filter((t) => t.status === "completed");
+  hideNav()
   renderTodos(temp);
 };
 
 document.querySelector(".pending").onclick = () => {
   let temp = todo_data.filter((t) => t.status === "pending");
+  hideNav()
   renderTodos(temp);
 };
 document.querySelector(".All_Tasks").onclick = () => {
+  hideNav()
   renderTodos(todo_data);
 };
 
@@ -238,6 +252,7 @@ document.querySelector(".late").onclick = () => {
 
     return todoCompletionDate - nowDate < 1;
   });
+  hideNav()
   renderTodos(temp);
 };
 
@@ -249,7 +264,9 @@ document.querySelector(".today").onclick = () => {
     let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
     return diff > 0 && diff < 24;
   });
+  hideNav()
   renderTodos(temp);
+
 };
 
 /*const completed_btn = document.getElementsByClassName("completed")[0];
@@ -263,5 +280,12 @@ create_btn.addEventListener("click", () => {
   task_form.style.display = "block";
 });
 
+//hide the nav
+function hideNav(){
+  const nav_element = document.querySelector('#navid')
 
+if(nav_element.classList.contains('open'))  nav_element.className = 'nav'
+
+
+}
 
