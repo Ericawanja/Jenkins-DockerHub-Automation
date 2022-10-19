@@ -73,6 +73,7 @@ input{
 .form_btns{
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
 
 }
 .submit{
@@ -186,7 +187,8 @@ padding: 0 10px;
 @media  screen and (max-width:750px) {
 
   .wrapper{
-    width: 90%;
+    width: 95%;
+    border-radius: 10px;
   
   }
   .hero .hero_details{
@@ -197,6 +199,9 @@ padding: 0 10px;
       }
       .hero_details h2{
         padding-left: 10px;
+      }
+      .task_form{
+        width: 80%;
       }
   
 }

@@ -4,29 +4,28 @@ const submit = document.querySelector(".submit");
 const renderTodos = (todo_list) => {
   //console.log(todo_list)
   const Task_container = document.querySelector(".task_list");
-  if(todo_list.length === 0){
-    Task_container.innerHTML= `<div class="">
+  if (todo_list.length === 0) {
+    Task_container.innerHTML = `<div class="">
     <h4 style="text-align:center; padding-top:100px">No tasks yet. Click create button to add</h4>  
-    `
-  } else{
- 
+    `;
+  } else {
+    Task_container.innerHTML = todo_list
+      .map((todo, index) => {
+        let nowDate = new Date().getTime();
+        let todoCompletionDate = new Date(todo.completion_date).getTime();
 
-  Task_container.innerHTML = todo_list
-    .map((todo, index) => {
-      let nowDate = new Date().getTime();
-      let todoCompletionDate = new Date(todo.completion_date).getTime();
+        let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
 
-      let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
-      
-      let diff_status = diff < 0 ? 'Late' : 'Remaining' 
+        let diff_status = diff < 0 ? "Late" : "Remaining";
 
+        let diff_ =
+          diff > 24
+            ? Math.floor(diff / 24) + " Days"
+            : Math.floor(diff) + " Hours";
 
-      let diff_ = diff > 24 ? Math.floor(diff / 24)+" Days": Math.floor(diff)+" Hours";
-
-
-      return `<div class="task ${
-        todo.status === "completed" && "task-completed"
-      }" >
+        return `<div class="task ${
+          todo.status === "completed" && "task-completed"
+        }" >
     <div class="completed_btn"  >
       <input
       data-id="${todo.id}"
@@ -77,69 +76,69 @@ const renderTodos = (todo_list) => {
         </span>      
     </div>
   </div>`;
-    })
-    .join("");
+      })
+      .join("");
 
-  //edit button
-  const editButtons = document.querySelectorAll(".edit");
+    //edit button
+    const editButtons = document.querySelectorAll(".edit");
 
-  for (let editButton of editButtons) {
-    editButton.onclick = (e) => {
-      const id = e.target.parentElement.getAttribute("data-id");
+    for (let editButton of editButtons) {
+      editButton.onclick = (e) => {
+        const id = e.target.parentElement.getAttribute("data-id");
 
-      const todo = todo_data.find((todo) => todo.id === +id);
+        const todo = todo_data.find((todo) => todo.id === +id);
 
-      if (todo) {
-        document.getElementById("title").value = todo.title;
-        document.getElementById("task_desc").value = todo.description;
-        document.getElementById("completion_date").value = todo.completion_date;
+        if (todo) {
+          document.getElementById("title").value = todo.title;
+          document.getElementById("task_desc").value = todo.description;
+          document.getElementById("completion_date").value =
+            todo.completion_date;
 
-        document.querySelector(".task_form").style.display = "block";
-        document.querySelector("#form-title").innerHTML = "Update Task";
+          document.querySelector(".task_form").style.display = "block";
+          document.querySelector("#form-title").innerHTML = "Update Task";
 
-        document.querySelector(".submit").setAttribute("data-id", id);
-      }
-    };
-  }
+          document.querySelector(".submit").setAttribute("data-id", id);
+        }
+      };
+    }
 
-  // delete task
-  const deleteButtons = document.querySelectorAll(".delete");
+    // delete task
+    const deleteButtons = document.querySelectorAll(".delete");
 
-  for (let deleteButton of deleteButtons) {
-    deleteButton.onclick = (e) => {
-      const id = e.target.parentElement.getAttribute("data-id");
+    for (let deleteButton of deleteButtons) {
+      deleteButton.onclick = (e) => {
+        const id = e.target.parentElement.getAttribute("data-id");
 
-      todo_data = todo_data.filter((t) => t.id !== +id);
+        todo_data = todo_data.filter((t) => t.id !== +id);
 
-      renderTodos(todo_data);
-    };
-  }
-
-  // pupulate completed task
-
-  const task_checkboxes = document.querySelectorAll(".task_checkbox");
-  for (let checkbox of task_checkboxes) {
-    checkbox.onclick = (e) => {
-      const completed_id = e.target.getAttribute("data-id");
-      const completed_task = todo_data.find(
-        (todo) => todo.id === +completed_id
-      );
-
-      if (completed_task) {
-        todo_data = todo_data.map((t) => {
-          if (t.id === completed_task.id) {
-            t.status = t.status === "completed" ? "pending" : "completed";
-          }
-          return t;
-        });
-        //const  = todo_data.filter((t) => completed_id.id == +id);
-        hideNav()
         renderTodos(todo_data);
-        
-      }
-    };
+      };
+    }
+
+    // pupulate completed task
+
+    const task_checkboxes = document.querySelectorAll(".task_checkbox");
+    for (let checkbox of task_checkboxes) {
+      checkbox.onclick = (e) => {
+        const completed_id = e.target.getAttribute("data-id");
+        const completed_task = todo_data.find(
+          (todo) => todo.id === +completed_id
+        );
+
+        if (completed_task) {
+          todo_data = todo_data.map((t) => {
+            if (t.id === completed_task.id) {
+              t.status = t.status === "completed" ? "pending" : "completed";
+            }
+            return t;
+          });
+          //const  = todo_data.filter((t) => completed_id.id == +id);
+          hideNav();
+          renderTodos(todo_data);
+        }
+      };
+    }
   }
-}
 };
 
 renderTodos(todo_data);
@@ -149,26 +148,24 @@ const CreateTask = () => {
   const title = document.getElementById("title").value;
   const task_desc = document.getElementById("task_desc").value;
   const completion_date = document.getElementById("completion_date").value;
-  if(title && task_desc && completion_date){
-  const id = Math.ceil(Math.random() * 100000000);
-  const todo = {
-    id,
-    title,
-    description: task_desc,
-    completion_date,
-    status: "pending",
-  };
+  if (title && task_desc && completion_date) {
+    const id = Math.ceil(Math.random() * 100000000);
+    const todo = {
+      id,
+      title,
+      description: task_desc,
+      completion_date,
+      status: "pending",
+    };
 
-  todo_data.unshift(todo);
-  document.querySelector(".task_form").style.display = "none";
-  resetForm();
-  hideNav()
-  renderTodos(todo_data);
-  
-}
-else{
-  alert('Enter all details')
-}
+    todo_data.unshift(todo);
+    document.querySelector(".task_form").style.display = "none";
+    resetForm();
+    hideNav();
+    renderTodos(todo_data);
+  } else {
+    alert("Enter all details");
+  }
 };
 
 //update task
@@ -199,8 +196,7 @@ const UpdateTask = (id) => {
 /**********************Event Listeners */
 submit.addEventListener("click", (e) => {
   let id = e.target.getAttribute("data-id");
-  console.log(id);
-
+  
   if (id) {
     UpdateTask(+id);
   } else {
@@ -226,22 +222,20 @@ function resetForm() {
 
 // populating completed tasks
 
-
-
 // Filters
 document.querySelector(".completed").onclick = () => {
   let temp = todo_data.filter((t) => t.status === "completed");
-  hideNav()
+  hideNav();
   renderTodos(temp);
 };
 
 document.querySelector(".pending").onclick = () => {
   let temp = todo_data.filter((t) => t.status === "pending");
-  hideNav()
+  hideNav();
   renderTodos(temp);
 };
 document.querySelector(".All_Tasks").onclick = () => {
-  hideNav()
+  hideNav();
   renderTodos(todo_data);
 };
 
@@ -252,7 +246,7 @@ document.querySelector(".late").onclick = () => {
 
     return todoCompletionDate - nowDate < 1;
   });
-  hideNav()
+  hideNav();
   renderTodos(temp);
 };
 
@@ -264,13 +258,11 @@ document.querySelector(".today").onclick = () => {
     let diff = (todoCompletionDate - nowDate) / (1000 * 60 * 60);
     return diff > 0 && diff < 24;
   });
-  hideNav()
+  hideNav();
   renderTodos(temp);
-
 };
 
-/*const completed_btn = document.getElementsByClassName("completed")[0];
-completed_btn.addEventListener("click", completed_tasks);*/
+
 
 //opening form
 const create_btn = document.querySelector(".create_Task");
@@ -281,11 +273,11 @@ create_btn.addEventListener("click", () => {
 });
 
 //hide the nav
-function hideNav(){
-  const nav_element = document.querySelector('#navid')
+function hideNav() {
+  const nav_element = document.querySelector("#navid");
 
-if(nav_element.classList.contains('open'))  nav_element.className = 'nav'
-
-
+  if (nav_element.classList.contains("open")) {
+    nav_element.className = "nav";
+    menu_icon.innerHTML ='<svg xmlns="http://www.w3.org/2000/svg" width="30" height="54" viewBox="0 0 24 24" style="fill: rgb(113, 9, 105);transform: ;msFilter:;"><path d="M4 6h16v2H4zm4 5h12v2H8zm5 5h7v2h-7z"></path></svg>'
+  }
 }
-
