@@ -245,6 +245,7 @@ document.querySelector(".completed").onclick = () => {
 };
 
 document.querySelector(".pending").onclick = () => {
+  
   let temp = todo_data.filter((t) => t.status === "pending");
   hideNav();
   renderTodos(temp);
@@ -255,17 +256,19 @@ document.querySelector(".All_Tasks").onclick = () => {
 };
 
 document.querySelector(".late").onclick = () => {
+  
   let temp = todo_data.filter((t) => {
     let nowDate = new Date().getTime();
     let todoCompletionDate = new Date(t.completion_date).getTime();
 
-    return todoCompletionDate - nowDate < 1;
+    return todoCompletionDate - nowDate < 1 && t.status != 'completed';
   });
   hideNav();
   renderTodos(temp);
 };
 
 document.querySelector(".today").onclick = () => {
+  
   let temp = todo_data.filter((t) => {
     let nowDate = new Date().getTime();
     let todoCompletionDate = new Date(t.completion_date).getTime();
