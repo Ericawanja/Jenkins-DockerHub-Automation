@@ -190,6 +190,18 @@ padding: 0 10px;
   border-radius: 0;
   color: whitesmoke;
 }
+.centerImage{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.addIcon{
+  background-color: #ab49d2;
+  border-radius: 300px;
+  display: none;
+  padding: 20px;
+}
+
 
 
 @media  screen and (max-width:750px) {
@@ -239,6 +251,9 @@ padding: 0 10px;
   .menu_icon svg{
     margin-right: 15px;
     
+  }
+  .addIcon{
+    display: inline-block;
   }
   
 }
