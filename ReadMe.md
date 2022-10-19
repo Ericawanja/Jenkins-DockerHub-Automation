@@ -3,5 +3,8 @@ A Vanilla javascript app that allows the users to:
  - Display all the created tasks
  - Edit a created task
  - Delete a certain task which removes it from the user interface
- - Populate the pending task and completed tasks
- - Check the tasks to be done today 
+ To add to the normal todo app features this app also allows the users to 
+ - display only the pending tasks
+ - display only todays tasks
+ - populate all the completed tasks separately
+ - show the late tasks with the exact number of hours exceeded after completion 
