@@ -1,6 +1,8 @@
 let todo_data = [];
 const submit = document.querySelector(".submit");
 
+
+
 const renderTodos = (todo_list) => {
   //console.log(todo_list)
   const Task_container = document.querySelector(".task_list");
@@ -50,6 +52,7 @@ const renderTodos = (todo_list) => {
     <div class="side">      
         <span data-id="${todo.id}" class="edit">
           <svg
+          data-id="${todo.id}"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -63,6 +66,7 @@ const renderTodos = (todo_list) => {
         </span>
         <span data-id="${todo.id}" class="delete">
           <svg
+          data-id="${todo.id}"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -79,6 +83,8 @@ const renderTodos = (todo_list) => {
       })
       .join("");
 
+
+
     //edit button
     const editButtons = document.querySelectorAll(".edit");
 
@@ -87,8 +93,9 @@ const renderTodos = (todo_list) => {
         const id = e.target.parentElement.getAttribute("data-id");
 
         const todo = todo_data.find((todo) => todo.id === +id);
+        console.log(todo)
 
-        if (todo) {
+        if (todo && todo.status != 'completed') {
           document.getElementById("title").value = todo.title;
           document.getElementById("task_desc").value = todo.description;
           document.getElementById("completion_date").value =
@@ -98,16 +105,22 @@ const renderTodos = (todo_list) => {
           document.querySelector("#form-title").innerHTML = "Update Task";
 
           document.querySelector(".submit").setAttribute("data-id", id);
+        }else{
+          editButton.innerHTML ="<p style='color:red; background:white; width:100% padding-right:5px'>Completed</p>"
         }
       };
     }
 
     // delete task
+
     const deleteButtons = document.querySelectorAll(".delete");
 
     for (let deleteButton of deleteButtons) {
+
       deleteButton.onclick = (e) => {
+        //alert('clicked')
         const id = e.target.parentElement.getAttribute("data-id");
+        console.log(e.target.parentElement)
 
         todo_data = todo_data.filter((t) => t.id !== +id);
 
@@ -133,6 +146,7 @@ const renderTodos = (todo_list) => {
             return t;
           });
           //const  = todo_data.filter((t) => completed_id.id == +id);
+
           hideNav();
           renderTodos(todo_data);
         }

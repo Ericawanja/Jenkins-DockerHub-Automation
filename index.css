@@ -124,7 +124,7 @@ input{
 .task-completed .desc,
 .task-completed .date
 {
-  text-decoration: line-through;
+  opacity: 0.2;
 }
 
 .completed_btn{ 
