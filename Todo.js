@@ -164,7 +164,7 @@ const CreateTask = () => {
     hideNav();
     renderTodos(todo_data);
   } else {
-    alert("Enter all details");
+    document.querySelector('.enterDetails').style.display='block'
   }
 };
 
@@ -215,6 +215,7 @@ function resetForm() {
   document.getElementById("completion_date").value = "";
 
   document.querySelector(".submit").setAttribute("data-id", "");
+  
 
   // Reset Form Title
   document.querySelector("#form-title").innerHTML = "Create Task";
