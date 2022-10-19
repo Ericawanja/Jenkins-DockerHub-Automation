@@ -6,7 +6,7 @@ const renderTodos = (todo_list) => {
   const Task_container = document.querySelector(".task_list");
   if(todo_list.length === 0){
     Task_container.innerHTML= `<div class="">
-    <h4>No tasks yet. Click create button to add</h4>  
+    <h4 style="text-align:center; padding-top:100px">No tasks yet. Click create button to add</h4>  
     `
   } else{
  

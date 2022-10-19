@@ -173,10 +173,14 @@ padding: 0 10px;
 .open{
   display: block;
   position: fixed;
-  right: 50%;
-  left: 10%;
-  width: 60%;
-  background-color: aqua;
+  top: 8%;
+  left: 8%;
+  width: 70%;
+  background-color:rgb(119, 16, 209);
+}
+.open .menu{
+  border-radius: 0;
+  color: whitesmoke;
 }
 
 @media  screen and (max-width:750px) {
@@ -215,11 +219,13 @@ padding: 0 10px;
 
   .menu_icon{ 
     display: flex;
-    display: block;
-    justify-content: flex-start;
-    padding-left: 0px;
+    justify-content: flex-end;
     cursor: pointer;
     width: 100%;
+  }
+  .menu_icon svg{
+    margin-right: 15px;
+    
   }
   
 }
