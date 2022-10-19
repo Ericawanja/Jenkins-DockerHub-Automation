@@ -9,7 +9,7 @@ Roboto Slab 300 300
 }
 
 .wrapper {
-  width: 80%;
+  width: 60%;
   min-height: 100vh;
   background: rgb(239, 202, 254);
   display: grid;
@@ -23,6 +23,7 @@ Roboto Slab 300 300
   flex-direction: column;
   gap: 10px;
   padding: 10px;
+  
 }
 .create_task{
   background: #ab49d2;
@@ -181,14 +182,20 @@ padding: 0 10px;
 .open{
   display: block;
   position: fixed;
-  top: 8%;
+  top: 4%;
   left: 8%;
-  width: 70%;
+  width: 60%;
   background-color:rgb(119, 16, 209);
+  
 }
 .open .menu{
   border-radius: 0;
   color: whitesmoke;
+  margin: 10px 0;
+  background: transparent;
+}
+.open .menu:hover{
+  background-color: #ca80e8;
 }
 .centerImage{
   display: flex;
@@ -204,7 +211,7 @@ padding: 0 10px;
 
 
 
-@media  screen and (max-width:750px) {
+@media  screen and (max-width:950px) {
 
   .wrapper{
     width: 95%;
@@ -225,7 +232,7 @@ padding: 0 10px;
       }
   
 }
-@media  screen and (max-width:450px) {
+@media  screen and (max-width:750px) {
   
   .wrapper{
     grid-template-columns: 100%;
@@ -255,5 +262,7 @@ padding: 0 10px;
   .addIcon{
     display: inline-block;
   }
-  
+  .open{
+    height: 70%;
+  }
 }
