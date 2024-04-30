@@ -1,21 +1,29 @@
-pipeline{
+/* groovylint-disable LineLength */
+/* groovylint-disable-next-line CompileStatic */
+pipeline {
     agent any
     stages{
         stage('Build'){
-           steps{
-               sh 'docker build -t ericawanja/todoapp:latest .'
-           }
+            steps {
+                sh 'docker build -t ericawanja/todoapp:latest .'
+            }
         }
-        
-        stage('Login'){
+
+        stage('Login') {
             steps {
                 sh 'echo'
             }
         }
         stage('Push'){
-            steps{
+            steps {
                 //Deploy our app to DockerHub
-                sh 'docker push ericawanja/todoapp:latest'
+                withCredentials([usernamePassword(credentialsID:'dockerJenkinsID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'echo $PASSWORD'
+  
+               echo USERNAME
+  
+                echo "username is $USERNAME"
+                }
             }
         }
     }
