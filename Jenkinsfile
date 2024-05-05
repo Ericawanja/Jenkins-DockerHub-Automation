@@ -18,11 +18,7 @@ pipeline {
             steps {
                 //Deploy our app to DockerHub
                 withCredentials([usernamePassword(credentialsID: 'dockerJenkinsID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh "echo \$PASSWORD"
-
-                    echo USERNAME
-
-                    echo "username is \$USERNAME"
+                  
                 }
             }
         }
