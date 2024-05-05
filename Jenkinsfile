@@ -3,28 +3,27 @@
 pipeline {
     agent any
     stages{
+         stage('Login') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerJenkinsID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    
+                   sh "docker login -u $USERNAME -p $PASSWORD"                  
+                  
+                }
+            }
+        }
+        
         stage('Build'){
             steps {
                 sh 'docker build -t ericawanja/todoapp:latest .'
             }
         }
 
-        stage('Login') {
-            steps {
-                sh 'echo'
-            }
-        }
+       
         stage('Push'){
             steps {
                 //Deploy our app to DockerHub
-                withCredentials([usernamePassword(credentialsId: 'dockerJenkinsID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh '''
-                        echo "Username: $USERNAME"
-                        echo "Password: $PASSWORD"
-                        # Use the credentials to perform some operation, e.g., login to a service
-                    '''
-                  
-                }
+               sh 'docker push ericawanja/todoapp:latest'
             }
         }
     }
