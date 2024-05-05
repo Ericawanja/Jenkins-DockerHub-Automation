@@ -17,12 +17,12 @@ pipeline {
         stage('Push'){
             steps {
                 //Deploy our app to DockerHub
-                withCredentials([usernamePassword(credentialsID:'dockerJenkinsID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'echo $PASSWORD'
+                withCredentials([usernamePassword(credentialsID: 'dockerJenkinsID', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "echo \$PASSWORD"
 
                     echo USERNAME
 
-                    echo "username is $USERNAME"
+                    echo "username is \$USERNAME"
                 }
             }
         }
